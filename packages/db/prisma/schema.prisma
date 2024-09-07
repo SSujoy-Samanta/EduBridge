@@ -1,0 +1,105 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+model User {
+  id          Int        @id @default(autoincrement())
+  name        String
+  email       String     @unique
+  password    String
+  mobile      String
+  address     Address?
+  verified    Boolean    @default(false)
+  affiliates  String
+  age         String
+  currDegree  String
+  pastDegree  String
+  otp         Otp?       
+  school      School[]  
+  college     College[]
+  messages    Message[] 
+  rooms    Room[]   @relation("UserRooms")
+  createdRooms Room[]  @relation("CreatedRooms")
+  sentFriendships      Friendship[] @relation("sentFriendships")
+  receivedFriendships  Friendship[] @relation("receivedFriendships")
+}
+
+model School {
+  id     String @id @default(uuid())
+  name   String
+  situate String
+  userId Int
+  user   User   @relation(fields: [userId], references: [id])
+}
+
+model College {
+  id     String @id @default(uuid())
+  name   String
+  situate String
+  userId Int
+  user   User   @relation(fields: [userId], references: [id])
+}
+
+model Otp {
+  id        Int      @id @default(autoincrement())
+  OTP       Int
+  created   DateTime @default(now())
+  expired   DateTime
+  userId    Int      @unique
+  user      User     @relation(fields: [userId], references: [id])
+}
+model  Address{
+  id        Int      @id @default(autoincrement())
+  country   String
+  state     String
+  city      String
+  userId    Int      @unique
+  user      User     @relation(fields: [userId], references: [id])
+}
+model Room {
+  id       Int      @id @default(autoincrement())
+  name     String   @unique
+  createdBy Int
+  creator     User     @relation("CreatedRooms", fields: [createdBy], references: [id])
+  users     User[]   @relation("UserRooms")
+  messages Message[]
+}
+
+model Message {
+  id        Int      @id @default(autoincrement())
+  content   String
+  roomId    Int
+  userId    Int
+  user      User     @relation(fields: [userId],references: [id])
+  room      Room     @relation(fields: [roomId], references: [id])
+  createdAt DateTime @default(now())
+}
+model Friendship {
+  id         Int              @id @default(autoincrement())
+  status     FriendshipStatus
+  senderId   Int
+  receiverId Int
+  sender     User             @relation("sentFriendships", fields: [senderId], references: [id])
+  receiver   User             @relation("receivedFriendships", fields: [receiverId], references: [id])
+  createdAt  DateTime         @default(now())
+  updatedAt  DateTime         @updatedAt
+
+  @@unique([senderId, receiverId]) // Ensures a unique pair of sender and receiver
+  @@index([senderId])              // Adds index for senderId
+  @@index([receiverId])            // Adds index for receiverId
+}
+
+enum FriendshipStatus {
+  PENDING
+  ACCEPTED
+}

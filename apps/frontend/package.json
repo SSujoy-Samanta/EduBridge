@@ -1,0 +1,37 @@
+{
+  "name": "frontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@repo/common": "*",
+    "@repo/db": "*",
+    "@repo/ui": "*",
+    "@types/bcrypt": "^5.0.2",
+    "@types/next-auth": "^3.15.0",
+    "@types/recoil": "^0.0.9",
+    "axios": "^1.7.5",
+    "bcrypt": "^5.1.1",
+    "next": "14.2.7",
+    "next-auth": "^4.24.7",
+    "rate-limiter-flexible": "^5.0.3",
+    "react": "^18",
+    "react-dom": "^18",
+    "recoil": "^0.7.7"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.7",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5"
+  }
+}
