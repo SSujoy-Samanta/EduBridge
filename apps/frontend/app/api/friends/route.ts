@@ -36,9 +36,9 @@ export async function GET(req: NextRequest) {
         },
     });
   
-    const friends = friendships.map(friendship =>
-    friendship.senderId === Id ? friendship.receiver : friendship.sender
-    );
+    const friends = friendships.map(friendship => {
+      return friendship.senderId === Id ? friendship.receiver : friendship.sender;
+    });
   
     return NextResponse.json({data:friends},{status:201})
     
