@@ -69,6 +69,7 @@ model  Address{
 model Room {
   id       Int      @id @default(autoincrement())
   name     String   @unique
+  passkey  String?  @unique 
   createdBy Int
   creator     User     @relation("CreatedRooms", fields: [createdBy], references: [id])
   users     User[]   @relation("UserRooms")

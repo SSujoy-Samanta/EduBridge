@@ -2,11 +2,13 @@ import { NextRequest, NextResponse } from "next/server";
 import client from "@repo/db/client";
 import { RoomSchema } from "@repo/common/signUpSchema";
 import { validateRoomName } from "@/lib/room/validRoomName";
+import { generatePasskey } from "@/lib/room/passkeyGeneration";
 
 export async function POST(req: NextRequest) {
-    const roomName = req.nextUrl.searchParams.get("name");
-    const creatorId = parseInt(req.nextUrl.searchParams.get("id") || '');
-
+    // const roomName = req.nextUrl.searchParams.get("name");
+    // const creatorId = parseInt(req.nextUrl.searchParams.get("id") || '');
+    const body= await req.json();
+    const {roomName,creatorId}: { roomName: string, creatorId: number }=body;
     // Ensure roomName is not null
     if (!roomName) {
         return NextResponse.json(
@@ -38,11 +40,13 @@ export async function POST(req: NextRequest) {
         let room = await client.room.findUnique({ where: { name: parseRoom.data.roomName } });
 
         if (!room) {
+            const passkey=await generatePasskey();
             // Create the room if it doesn't exist and associate it with the creator
             room = await client.room.create({
                 data: {
                     name: parseRoom.data.roomName,
                     createdBy: creatorId,
+                    passkey:passkey,
                     users: {
                         connect: { id: creatorId }, // Add the creator to the users list
                     },
