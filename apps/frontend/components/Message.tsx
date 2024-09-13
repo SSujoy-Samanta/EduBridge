@@ -1,7 +1,7 @@
 export const Message=({msg,type='You',user}:{
     msg:string,
     type:string,
-    user:string|null
+    user:string,
 })=>{
     return <div className="w-full">
         <div className={type==='You'?`flex justify-end`:`flex justify-start`}>

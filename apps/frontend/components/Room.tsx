@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { InputBox } from './InputBox';
 import { PrimaryButton } from './Buttons/PrimaryButton';
 import { useSetRecoilState } from 'recoil';
@@ -7,6 +7,7 @@ import { notificationState } from '@/lib/atom';
 import axios from 'axios';
 import { LinkButton } from './Buttons/LinkButton';
 import { RoomDetails } from './RoomDetails';
+//import { useRouter } from 'next/navigation';
 const apiUrl=process.env.NEXT_PUBLIC_API_URL
 interface UserRoom{
     id: number;
@@ -14,23 +15,41 @@ interface UserRoom{
     passkey: string | null;
     createdBy: number;
 }
-export const Room=({userId,userRooms}:{userId:number,userRooms:UserRoom[]})=>{
+export const Room=({ userId, initialUserRooms }: { userId: number, initialUserRooms: UserRoom[] })=>{
     const setNotification=useSetRecoilState(notificationState);
     const [group,setGroup]=useState<boolean>(false);
     const [inpGroup,setInpGroup]=useState("");
     const [Join,setJoin]=useState<boolean>(false);
     const [inpJoin,setInpJoin]=useState("");
-    return <div className="flex gap-2 p-3 w-full">
-        <div className='w-4/6 flex flex-col gap-2 items-center'>
+    //const router=useRouter();
+    const [userRooms, setUserRooms] = useState<UserRoom[]>(initialUserRooms); // Use state for userRooms
+    const [groupCreated, setGroupCreated] = useState(false);
+    const fetchUserRooms = async () => {
+        try {
+            const response = await axios.get(`${apiUrl}/room/getrooms`, { params: { id:userId} });
+            setUserRooms(response.data.userRooms); // Update userRooms state
+        } catch (error) {
+            setNotification({ msg: "Error fetching rooms", type: "error" });
+        }
+    };
+    const openLinkInNewTab = (url: string) => {
+        window.open(url, '_blank');
+    };
+    // Fetch userRooms on mount or after group creation
+    useEffect(() => {
+        fetchUserRooms();
+    }, [groupCreated]);
+    return <div className="flex gap-2 p-3 w-full h-full justify-between">
+        <div className='w-3/6 flex flex-col gap-2 items-center border rounded m-4 p-2 min-h-3.5 border-teal-800 overflow-auto'>
             {
-                userRooms.map((room:UserRoom)=>{
-                    return <RoomDetails key={room.id} name={room.name} passkey={room.passkey} onClick={()=>{}}/>
+                userRooms && userRooms.map((room:UserRoom)=>{
+                    return <RoomDetails key={room.id} name={room.name} passkey={room.passkey} roomId={room.id} userId={userId} setGroupCreated={setGroupCreated}/>
                 })
             }
         </div>
         <div className='w-2/6 flex flex-col gap-2'>
             <div className='flex flex-col gap-2 justify-center items-center w-full'>
-                <button onClick={()=>{setGroup(true)}} className='rounded-md bg-green-600 p-2 w-2/4'>
+                <button onClick={()=>{setGroup(true)}} className='rounded-md bg-green-600 p-2 w-2/4 hover:bg-green-700 transition'>
                     <div className="flex justify-center items-center gap-2">
                         <div>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" className="size-6">
@@ -52,6 +71,7 @@ export const Room=({userId,userRooms}:{userId:number,userRooms:UserRoom[]})=>{
                                 })
                                 setInpGroup("");
                                 setGroup(false);
+                                setGroupCreated(x=>!x);
                                 setNotification({ msg: "Group Created Successfully", type: "success" });
                             } catch (error:any) {
                                 setNotification({ msg: error.response?.data.msg || "Error while Group creation", type: "error" });
@@ -64,8 +84,8 @@ export const Room=({userId,userRooms}:{userId:number,userRooms:UserRoom[]})=>{
 
             </div>
             <div className='flex flex-col gap-2 justify-center items-center w-full'>
-                <button onClick={()=>{setJoin(true)}} className='rounded-md bg-blue-600 p-2 w-2/4'>
-                    <div className="flex justify-center items-center gap-2">
+                <button onClick={()=>{setJoin(true)}} className='rounded-md bg-blue-600 p-2 w-2/4 hover:bg-blue-700 transition'>
+                    <div className="flex justify-center items-center gap-2 ">
                         <div>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" className="size-6">
                         <path fillRule="evenodd" d="M16.5 3.75a1.5 1.5 0 0 1 1.5 1.5v13.5a1.5 1.5 0 0 1-1.5 1.5h-6a1.5 1.5 0 0 1-1.5-1.5V15a.75.75 0 0 0-1.5 0v3.75a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3V5.25a3 3 0 0 0-3-3h-6a3 3 0 0 0-3 3V9A.75.75 0 1 0 9 9V5.25a1.5 1.5 0 0 1 1.5-1.5h6Zm-5.03 4.72a.75.75 0 0 0 0 1.06l1.72 1.72H2.25a.75.75 0 0 0 0 1.5h10.94l-1.72 1.72a.75.75 0 1 0 1.06 1.06l3-3a.75.75 0 0 0 0-1.06l-3-3a.75.75 0 0 0-1.06 0Z" clipRule="evenodd" />
@@ -80,13 +100,15 @@ export const Room=({userId,userRooms}:{userId:number,userRooms:UserRoom[]})=>{
                         <InputBox label={"Group PassKey"} placeholder='Enter Group PassKey' onChange={(e)=>{setInpJoin(e.target.value)}}/>
                         <PrimaryButton onClick={async()=>{
                             try {
-                                await axios.post(`${apiUrl}/room/joinroom`,{
-                                    passkey: inpJoin,
+                                const res=await axios.post(`${apiUrl}/room/joinroom`,{
+                                    passkey: inpJoin.trim(),
                                     userId: userId
                                 })
                                 setInpJoin("");
                                 setJoin(false);
                                 setNotification({ msg: "Joining Group Successfull", type: "success" });
+                                //router.push(`/chats?room=${res.data.result.name}&userId=${userId}`)
+                                openLinkInNewTab(`/chats?room=${res.data.result.name}&userId=${userId}`);
                             } catch (error:any) {
                                 setNotification({ msg: error.response?.data.msg || "Error while joining Group", type: "error" });
                             }

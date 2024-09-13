@@ -19,9 +19,9 @@ export default async function RoomServer(){
     })
     if (!userRooms) {
         return <div className="text-center pt-10 text-red-700 w-full">No rooms found for this user.</div>;
-      }
+    }
     
-    return <div className="flex gap-2 w-full"> 
-        <Room userId={userId} userRooms={userRooms}/>
+    return <div className="flex gap-2 w-full h-full"> 
+        <Room userId={userId} initialUserRooms={userRooms}/>
     </div>
 }

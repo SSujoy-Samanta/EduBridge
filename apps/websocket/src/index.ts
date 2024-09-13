@@ -1,6 +1,5 @@
 import express from 'express';
 import { WebSocketServer, WebSocket } from 'ws';
-import url from 'url';
 import http from 'http';
 import { validateMessage, validateRoomName } from './utils/validInput';
 import { addUserToRoom, createRoom, deleteEmptyRooms, findRoom, removeUserFromRoom } from './services/roomService';
@@ -16,34 +15,27 @@ const httpServer = app.listen(8080, () => {
 const wss = new WebSocketServer({ server: httpServer });
 
 // WebSocket connection handler
-wss.on('connection', function connection(ws: WebSocket & { roomId?: number, userId?: number }, req: http.IncomingMessage) {
+wss.on('connection', function connection(ws: WebSocket & { roomId?: number, userId?: number,senderName?:string }, req: http.IncomingMessage) {
   ws.on('error', console.error);
-
-  const queryParams = url.parse(req.url || '', true).query;
-  console.log('Query parameters:', queryParams);
 
   ws.on('message', async (data: string) => {
     try {
       const message = JSON.parse(data);
-      const { type, room, creatorId, userId, content } = message;
+      const { type, room, creatorId, userId, content, senderName } = message;
+      // console.log(message);
 
       switch (type) {
         case 'CreateRoom':
           await handleCreateRoom(ws, room, creatorId);
           break;
         case 'JoinRoom':
-          await handleJoinRoom(ws, room, userId);
+          await handleJoinRoom(ws, room, userId,senderName);
           break;
         case 'sendMessage':
-          await handleSendMessage(ws, content, userId);
+          await handleSendMessage(ws, content, userId, senderName);
           break;
         case 'LeaveRoom':
-          const RoomId = ws.roomId;
-          const UserId = ws.userId;
-          if (RoomId && UserId) {
-            await handleLeaveRoom(RoomId, UserId);
-            broadcastSystemMessage(RoomId, `User ${UserId} has left the room`);
-          }
+          await handleLeaveRoom(ws);
           break;
         default:
           ws.send(JSON.stringify({ type: 'error', message: 'Unknown message type' }));
@@ -58,10 +50,9 @@ wss.on('connection', function connection(ws: WebSocket & { roomId?: number, user
   ws.on('close', async () => {
     const roomId = ws.roomId;
     const userId = ws.userId;
-
-    if (roomId && userId) {
-      await deleteEmptyRooms();
-      broadcastSystemMessage(roomId, `User ${userId} has left the room`);
+    const senderName=ws.senderName;
+    if (roomId && userId && senderName) {
+      await handleLeaveRoom(ws);
     }
   });
 });
@@ -85,7 +76,7 @@ async function handleCreateRoom(ws: WebSocket & { roomId?: number, userId?: numb
 }
 
 // Function to handle room joining
-async function handleJoinRoom(ws: WebSocket & { roomId?: number, userId?: number }, roomName: string, userId: number | undefined) {
+async function handleJoinRoom(ws: WebSocket & { roomId?: number, userId?: number,senderName?:string }, roomName: string, userId: number | undefined,senderName:string) {
   if (!validateRoomName(roomName)) {
     ws.send(JSON.stringify({ type: 'error', message: 'Invalid room name' }));
     return;
@@ -101,16 +92,17 @@ async function handleJoinRoom(ws: WebSocket & { roomId?: number, userId?: number
     ws.send(JSON.stringify({ type: 'error', message: 'Invalid user ID' }));
     return;
   }
-  
+
   await addUserToRoom(userId, room.id);
   ws.roomId = room.id;
   ws.userId = userId;
-  ws.send(JSON.stringify({ type: 'system', message: `Joined room: ${roomName}` }));
-  broadcastSystemMessage(room.id, `User ${userId} has joined the room`);
+  ws.senderName=senderName;
+  //ws.send(JSON.stringify({ type: 'system', message: `Joined room: ${roomName}` }));
+  broadcastSystemMessage(room.id, `${senderName} has joined the room`);
 }
 
 // Function to handle sending messages
-async function handleSendMessage(ws: WebSocket & { roomId?: number, userId?: number }, content: string, userId: number | undefined) {
+async function handleSendMessage(ws: WebSocket & { roomId?: number, userId?: number,senderName?:string }, content: string, userId: number | undefined, senderName: string) {
   const roomId = ws.roomId;
   if (!roomId || !validateMessage(content)) {
     ws.send(JSON.stringify({ type: 'error', message: 'Invalid message or room not joined' }));
@@ -123,20 +115,27 @@ async function handleSendMessage(ws: WebSocket & { roomId?: number, userId?: num
   }
 
   await createMessage(content, roomId, userId);
-  broadcastMessage(roomId, content);
+  broadcastMessage(roomId, content, userId, senderName);
 }
 
 // Function to handle leaving a room
-async function handleLeaveRoom(roomId: number, userId: number) {
-  await removeUserFromRoom(userId, roomId);
-  await deleteEmptyRooms();
+async function handleLeaveRoom(ws: WebSocket & { roomId?: number, userId?: number,senderName?:string }) {
+  const roomId = ws.roomId;
+  const userId = ws.userId;
+  const senderName=ws.senderName;
+
+  if (roomId && userId) {
+    ///await removeUserFromRoom(userId, roomId);
+    //await deleteEmptyRooms();
+    broadcastSystemMessage(roomId, `${senderName} has left the room`);
+  }
 }
 
 // Function to broadcast messages to all clients in a room
-function broadcastMessage(roomId: number, content: string) {
+function broadcastMessage(roomId: number, content: string, userId: number, senderName: string) {
   wss.clients.forEach((client) => {
     if ((client as any).roomId === roomId && client.readyState === WebSocket.OPEN) {
-      client.send(JSON.stringify({ type: 'message', content }));
+      client.send(JSON.stringify({ type: 'message', content, userId, senderName }));
     }
   });
 }
