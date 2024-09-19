@@ -5,7 +5,7 @@ import { rateLimit } from './utils/Middleware/rateLimiter';
 
 // Specify paths to match for this middleware
 export const config = {
-    matcher: ['/api/:path*', '/dashboard/:path*', '/admin/:path*','/chats/:path*','/room/:path*','/friends/:path*','/user/:path*'],
+    matcher: ['/api/:path*', '/dashboard/:path*', '/admin/:path*','/chats/:path*','/room/:path*','/friends/:path*','/user/:path*','/videocall/:path*'],
 };
 
 export async function middleware(req: NextRequest) {
@@ -17,7 +17,7 @@ export async function middleware(req: NextRequest) {
     }
   }
   // Apply authentication middleware for specific paths
-  if (req.nextUrl.pathname.startsWith('/dashboard') || req.nextUrl.pathname.startsWith('/admin')|| req.nextUrl.pathname.startsWith('/chats')|| req.nextUrl.pathname.startsWith('/room')|| req.nextUrl.pathname.startsWith('/friends')|| req.nextUrl.pathname.startsWith('/user')) {
+  if (req.nextUrl.pathname.startsWith('/dashboard') || req.nextUrl.pathname.startsWith('/admin')|| req.nextUrl.pathname.startsWith('/chats')|| req.nextUrl.pathname.startsWith('/room')|| req.nextUrl.pathname.startsWith('/friends')|| req.nextUrl.pathname.startsWith('/user')|| req.nextUrl.pathname.startsWith('/videocall')) {
     const authResponse = await AuthMiddleware(req);
     if (authResponse) {
       return authResponse; // Redirect or allow request based on authentication

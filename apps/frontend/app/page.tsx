@@ -6,6 +6,8 @@ export default async function Home() {
   return (
     <div className="flex justify-center items-center">
       <div className="pt-24">Home Page Of EduBridge</div>
+      <div>
+      </div>
     </div>
   );
 }

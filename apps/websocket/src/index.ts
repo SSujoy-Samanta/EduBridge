@@ -2,7 +2,7 @@ import express from 'express';
 import { WebSocketServer, WebSocket } from 'ws';
 import http from 'http';
 import { validateMessage, validateRoomName } from './utils/validInput';
-import { addUserToRoom, createRoom, deleteEmptyRooms, findRoom, removeUserFromRoom } from './services/roomService';
+import { addUserToRoom, createRoom, findRoom } from './services/roomService';
 import { createMessage } from './services/messageService';
 
 const app = express();
@@ -23,7 +23,6 @@ wss.on('connection', function connection(ws: WebSocket & { roomId?: number, user
       const message = JSON.parse(data);
       const { type, room, creatorId, userId, content, senderName } = message;
       // console.log(message);
-
       switch (type) {
         case 'CreateRoom':
           await handleCreateRoom(ws, room, creatorId);

@@ -30,6 +30,8 @@ model User {
   messages    Message[] 
   rooms    Room[]   @relation("UserRooms")
   createdRooms Room[]  @relation("CreatedRooms")
+  videoCallRooms   VideoCallRoom[] @relation("UsersVideoCallRooms")
+  createdVideoCallRooms VideoCallRoom[]  @relation("CreatedVideoCallRooms")
   sentFriendships      Friendship[] @relation("sentFriendships")
   receivedFriendships  Friendship[] @relation("receivedFriendships")
 }
@@ -74,6 +76,14 @@ model Room {
   creator     User     @relation("CreatedRooms", fields: [createdBy], references: [id])
   users     User[]   @relation("UserRooms")
   messages Message[]
+}
+model VideoCallRoom{
+  id       Int      @id @default(autoincrement())
+  name     String   @unique
+  passkey  String?  @unique 
+  createdBy Int
+  creator     User     @relation("CreatedVideoCallRooms", fields: [createdBy], references: [id])
+  users     User[]   @relation("UsersVideoCallRooms")
 }
 
 model Message {

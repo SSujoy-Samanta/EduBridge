@@ -17,11 +17,15 @@
     "@types/recoil": "^0.0.9",
     "axios": "^1.7.5",
     "bcrypt": "^5.1.1",
+    "colors": "^1.4.0",
+    "mediasoup-client": "^3.7.16",
     "next": "14.2.7",
     "next-auth": "^4.24.7",
+    "openai": "^4.62.1",
     "rate-limiter-flexible": "^5.0.3",
     "react": "^18",
     "react-dom": "^18",
+    "readline-sync": "^1.4.10",
     "recoil": "^0.7.7"
   },
   "devDependencies": {

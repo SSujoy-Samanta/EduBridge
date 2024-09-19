@@ -42,9 +42,28 @@ export const Room=({ userId, initialUserRooms }: { userId: number, initialUserRo
     return <div className="flex gap-2 p-3 w-full h-full justify-between">
         <div className='w-3/6 flex flex-col gap-2 items-center border rounded m-4 p-2 min-h-3.5 border-teal-800 overflow-auto'>
             {
-                userRooms && userRooms.map((room:UserRoom)=>{
+                userRooms.length? userRooms.map((room:UserRoom)=>{
                     return <RoomDetails key={room.id} name={room.name} passkey={room.passkey} roomId={room.id} userId={userId} setGroupCreated={setGroupCreated}/>
-                })
+                    })
+                : <div className='w-full'>
+                    <div role="status" className="w-full p-4 space-y-4 border border-gray-200 divide-y divide-gray-200 rounded shadow animate-pulse dark:divide-gray-700 md:p-6 dark:border-gray-700">
+                        <div className="flex items-center justify-between p-4">
+                            <div>
+                                <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
+                                <div className="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                            </div>
+                            <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12"></div>
+                        </div>
+                        <div className="flex items-center justify-between p-4">
+                            <div>
+                                <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
+                                <div className="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                            </div>
+                            <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12"></div>
+                        </div>
+                        <span className="sr-only">Loading...</span>
+                    </div>
+                </div>
             }
         </div>
         <div className='w-2/6 flex flex-col gap-2'>
@@ -117,6 +136,19 @@ export const Room=({ userId, initialUserRooms }: { userId: number, initialUserRo
                         <LinkButton onClick={()=>{setJoin(false)}}>Cancle</LinkButton>
                     </div>
                 }
+            </div>
+            <div className='flex flex-col gap-2 justify-center items-center w-full'>
+                <button className='rounded-md bg-sky-600 p-2 w-2/4 hover:bg-sky-700 transition text-black' onClick={()=>{
+                    openLinkInNewTab(`/videocall`);
+                }}>
+                    <div className="flex justify-center items-center gap-2 ">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-5">
+                        <path d="M3.25 4A2.25 2.25 0 0 0 1 6.25v7.5A2.25 2.25 0 0 0 3.25 16h7.5A2.25 2.25 0 0 0 13 13.75v-7.5A2.25 2.25 0 0 0 10.75 4h-7.5ZM19 4.75a.75.75 0 0 0-1.28-.53l-3 3a.75.75 0 0 0-.22.53v4.5c0 .199.079.39.22.53l3 3a.75.75 0 0 0 1.28-.53V4.75Z" />
+                        </svg>
+                        <p className="text-black">Start Metting</p>
+                    </div>
+                   
+                </button>
             </div>
         </div>
        
