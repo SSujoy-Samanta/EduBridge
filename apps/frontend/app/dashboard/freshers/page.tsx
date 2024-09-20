@@ -20,11 +20,11 @@ export default async function AlumniServer() {
     return (
         <div>
             {freshersData ? (
-                <div>
+                <div className="flex flex-col justify-center items-center">
                     <Freshers freshersData={freshersData}/>
                 </div>
             ) : (
-                <p className="flex justify-center items-center font-bold text-red-700 pt-24">Loading alumni data or no data available...</p>
+                <p className="flex justify-center items-center font-bold text-red-700 pt-24">Loading freshers data or no data available...</p>
             )}
         </div>
     );

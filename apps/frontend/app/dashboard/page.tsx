@@ -11,16 +11,7 @@ export default async function DashboardPage() {
             // Handle the case where the session is not available
             return <div>Please log in to view your dashboard.</div>;
         }
-
         const userId = parseInt(session.user.id);
-        const userDetails = await client.user.findFirst({
-            where: { id: userId },
-            include: {
-                school: { select: { name: true } },
-                college: { select: { name: true } },
-                rooms: { select: { name: true } },
-            },
-        });
         const requests=await client.friendship.findMany({
             where:{
                 receiverId:userId,
@@ -36,14 +27,9 @@ export default async function DashboardPage() {
                 }
             }
         })
-
-        if (!userDetails) {
-            return <div className="flex justify-center items-center font-bold text-red-700 pt-24">User details not found.</div>;
-        }
-
         return (
             <div className="w-full p-5 h-full">
-                <DashBoard userDetails={userDetails} Requests={requests} userId={userId}/>
+                <DashBoard Requests={requests} userId={userId}/>
             </div>
         );
     } catch (error) {

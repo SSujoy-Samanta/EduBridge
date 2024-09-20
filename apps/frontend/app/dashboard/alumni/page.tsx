@@ -20,7 +20,7 @@ export default async function AlumniServer() {
     return (
         <div>
             {alumniData ? (
-                <div>
+                <div className="flex flex-col">
                     <Alumni alumniData={alumniData}/>
                 </div>
             ) : (

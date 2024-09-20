@@ -9,7 +9,8 @@ import { degrees } from "@/utils/course";
 import Age from "@/utils/age";
 import { useSetRecoilState } from "recoil";
 import { notificationState } from "@/lib/atom";
-const apiUrl=process.env.NEXT_PUBLIC_API_URL
+const apiUrl=process.env.NEXT_PUBLIC_API_URL;
+import { signIn } from "next-auth/react";
 export const SignUp=()=>{
     const setNotification = useSetRecoilState(notificationState);
     const router=useRouter();
@@ -42,6 +43,21 @@ export const SignUp=()=>{
     };
     const handlePaseEducation = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setpastEducation(event.target.value);
+    };
+    const handleSignIn = async () => {
+        // Sign in using the credentials provider
+        const res = await signIn('credentials', {
+            redirect: false, // Set to true if you want to redirect to the callback URL automatically
+            email,
+            password,
+            callbackUrl: "" // Change this to the desired post-login page
+        });
+        if (res?.error) {
+            setNotification({ msg: "Invalid credentials", type: "error" });
+        } else if (res?.ok) {
+            router.push("/dashboard");
+            setNotification({ msg: "Sign-Up successful", type: "success" });
+        }
     };
     
     return <div className="w-3/5 flex flex-col justify-center gap-2  bg-sky-950 p-3 rounded-md border border-cyan-300 ">
@@ -226,7 +242,7 @@ export const SignUp=()=>{
                                 city:city
                             });
                             setNotification({msg:res.data.msg,type:"success"})
-                            router.push("/signin");
+                            await handleSignIn();
                         } catch (e:any) {
                             setNotification({msg:e.response?.data?.msg,type:"error"})
                         }

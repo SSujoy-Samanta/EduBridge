@@ -1,3 +1,6 @@
+'use client'
+import { useState } from "react";
+import { Search } from "./Search";
 import { ShowData } from "./ShowData";
 
 interface Address {
@@ -24,17 +27,30 @@ interface FreshersProps {
 
 export const Freshers = ({ freshersData }: FreshersProps) => {
     //console.log(freshersData)
+    const [filteredUsers, setFilteredUsers] = useState<Freshers[]>(freshersData.freshers);
+
+    function filterUsers(user: string) {
+        const result = freshersData.freshers.filter((x) => 
+            x.name.toLowerCase().includes(user.toLowerCase())
+        );
+        setFilteredUsers(result);
+    }
     return (
-        <div className="grid grid-cols-2 p-4 gap-6">
-            {freshersData.freshers.length > 0 ? (
-                freshersData.freshers.map((fresher, ind) => (
-                    <ShowData key={ind} user={fresher}/>
-                ))
-            ) : (
-                <p className="flex justify-center items-center font-bold text-red-700 pt-24">
-                    No alumni data available.
-                </p>
-            )}
+        <div className="flex flex-col justify-center items-center">
+            <div className="flex justify-center items-center p-1">
+                <Search onSearch={filterUsers}/>
+            </div>
+            <div className="grid grid-cols-2 p-4 gap-6">
+                {filteredUsers.length > 0 ? (
+                    filteredUsers.map((fresher, ind) => (
+                        <ShowData key={ind} user={fresher} />
+                    ))
+                ) : (
+                    <p className="flex justify-center items-center font-bold text-red-700 pt-24">
+                        No Freshers data available.
+                    </p>
+                )}
+            </div>
         </div>
     );
 };

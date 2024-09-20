@@ -2,7 +2,7 @@
 import { useRouter } from "next/navigation";
 import { LinkButton } from "./Buttons/LinkButton";
 import { SecondaryButton } from "./Buttons/SecondaryButton";
-import { UserDetailsRow } from "./UserDetailsRow";
+
 import { useState } from 'react';
 import axios from "axios";
 import { useSetRecoilState } from "recoil";
@@ -10,11 +10,9 @@ import { notificationState } from "@/lib/atom";
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 export const DashBoard = ({
-    userDetails,
     Requests,
     userId
 }: {
-    userDetails: any,
     Requests: any,
     userId: number
 }) => {
@@ -41,22 +39,19 @@ export const DashBoard = ({
 
     return (
         <div className="flex w-full h-full gap-4">
-            <div className="w-4/6 h-full rounded-md p-2 flex flex-col gap-2">
-                <UserDetailsRow label={"Username"} details={userDetails.name} onClick={() => { }} />
-                <UserDetailsRow label={"Email"} details={userDetails.email} onClick={() => { }} />
-                <UserDetailsRow label={"Phone No"} details={userDetails.mobile} onClick={() => { }} />
-                <UserDetailsRow label={"Affiliates"} details={userDetails.affiliates} onClick={() => { }} />
-                <UserDetailsRow label={"Age"} details={userDetails.age} onClick={() => { }} />
-                <UserDetailsRow label={"Present-Degree"} details={userDetails.currDegree} onClick={() => { }} />
-                <UserDetailsRow label={"Past-Degree"} details={userDetails.pastDegree} onClick={() => { }} />
-                <UserDetailsRow label={"School"} details={null} onClick={() => { }} />
-                <UserDetailsRow label={"College"} details={null} onClick={() => { }} />
-            </div>
+           
+            <div className=" flex flex-col w-4/6 max-h-full rounded-md p-2">
 
+            </div>
             <div className="flex flex-col w-2/6 max-h-full rounded-md p-2">
                 <div className="flex justify-around p-3">
                     <div><LinkButton onClick={() => { router.push("dashboard/freshers") }}>Freshers</LinkButton></div>
                     <div><SecondaryButton onClick={() => { router.push("dashboard/alumni") }}>Alumni</SecondaryButton></div>
+                    <div>
+                        <button className="p-2 bg-teal-600 rounded-md transition hover:bg-teal-700" onClick={()=>{
+                            router.push('/friends')
+                        }}>Friends</button>
+                    </div>
                 </div>
 
                 <div className="bg-teal-950 flex flex-col gap-2 rounded-md p-2 h-4/5">
