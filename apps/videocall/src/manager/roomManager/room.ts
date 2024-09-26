@@ -68,7 +68,7 @@ export class RoomManager {
     // Delete a room if it has no users
     deleteRoom(roomName: string): boolean {
         const roomIndex = this.rooms.findIndex(room => room.name === roomName);
-        if (roomIndex !== -1 && this.rooms[roomIndex].users.length === 0) {
+        if (roomIndex !== -1 && this.rooms[roomIndex]?.users.length === 0) {
             this.rooms.splice(roomIndex, 1); // Remove the room from the array
             return true; // Room successfully deleted
         }
