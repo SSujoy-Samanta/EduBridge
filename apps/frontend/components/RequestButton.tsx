@@ -70,6 +70,7 @@ export const RequestButton = ({ userId, receiverId }: { userId: number; receiver
             setNotification({ msg: "Request Sent Successfully", type: "success" });
         } catch (error: any) {
             setNotification({ msg: error.response?.data.msg || "Error sending request", type: "error" });
+            alert(error);
         }finally {
             setLoading(false);
         }

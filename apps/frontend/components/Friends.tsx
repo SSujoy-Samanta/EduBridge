@@ -25,7 +25,7 @@ export const AllFridendUi = ({friends,userId}:{friends:any,userId:number}) => {
                     <Search onSearch={filterUsers}/>
                 </div>
             </div>
-            <div className="grid grid-cols-2 p-4 gap-6">
+            <div className="grid xl:grid-cols-2 p-4 gap-6 lg:grid-cols-2 sm:grid-cols-1  ">
                 {filteredUsers.length > 0 ? (
                     filteredUsers.map((friend:any, ind:number) => (
                         <FriendUi key={ind} friend={friend} userId={userId}/>

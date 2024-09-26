@@ -289,25 +289,25 @@ export const VideoApp = ({
   return (
     <div className='w-full pt-10 flex flex-col justify-center items-center gap-3'>
       <h1 className='text-rose-700 border rounded-sm p-2 text-center border-slate-600 font-bold'>Room: <span className='text-teal-500'>{room.split('#')[0]}</span></h1>
-      <div className='grid grid-cols-2 gap-8'>
+      <div className='md:grid md:grid-cols-2 gap-8 xxs:flex xxs:flex-col-reverse p-3 '>
         <div className='flex flex-col justify-start items-center w-full border-2 rounded-sm border-slate-800'>
           <div className='font-extralight bg-sky-950 w-full text-center p-1 text-amber-700'>ME</div>
           <div className='w-full h-full'>
-            <video autoPlay width={400} height={400} ref={localVideoRef} />
+            <video autoPlay width={400} height={400}  ref={localVideoRef} />
           </div>
         </div>
-        <div className='flex flex-col justify-start items-center w-full border-2 rounded-sm border-slate-800'>
+        <div className='flex flex-col justify-start items-center w-full  border-2 rounded-sm border-slate-800'>
           {!lobby?
-            <div className='w-full h-full flex justify-center flex-col'>
+            <div className='w-full h-full flex justify-center items-center flex-col'>
               <div className='font-extralight bg-sky-950 w-full text-center p-1 text-amber-700'>
                 Friend
               </div>
-              <div className='w-full h-full'>
-                <video autoPlay width={400} height={400} ref={remoteVideoRef} />
+              <div className='w-full h-full flex justify-center items-center'>
+                <video autoPlay width={400} height={400}   ref={remoteVideoRef} />
               </div>
             </div>
           :
-            <div className='w-full h-full flex justify-center flex-col'>
+            <div className='w-full h-full md:h-full xxs:h-64  flex justify-center flex-col'>
               <div className='font-light bg-sky-950 w-full  text-center p-1 text-red-700 '> Waiting to connect you to someone</div>
               <div role="status" className="flex items-center justify-center h-full w-full bg-gray-300 animate-pulse dark:bg-gray-700 ">
                   <svg className="w-10 h-10 text-gray-200 dark:text-gray-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 20">
@@ -321,7 +321,7 @@ export const VideoApp = ({
           }
         </div>
       </div>
-      <div className='flex gap-10 items-center justify-around p-2 mt-16 border rounded-md border-slate-800 w-1/4 bg-slate-800'>
+      <div className='flex gap-10 items-center justify-around p-2 mt-16 border rounded-md border-slate-800  bg-slate-800 mb-2 lg:w-1/4 md:w-1/3 fixed bottom-2 '>
         
         <button className='bg-sky-700 p-2 rounded-full hover:bg-sky-800 transition' onClick={toggleAudio}>
         {audioMuted ? (

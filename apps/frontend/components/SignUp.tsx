@@ -60,8 +60,8 @@ export const SignUp=()=>{
         }
     };
     
-    return <div className="w-3/5 flex flex-col justify-center gap-2  bg-sky-950 p-3 rounded-md border border-cyan-300 ">
-        <div className="flex justify-between gap-2">
+    return <div className="w-3/5 flex h-full flex-col justify-center gap-2  bg-sky-950 p-3 rounded-md border border-cyan-300 xxs:w-11/12 mb-4 lg:w-4/5 sm2:text-base xxs:text-xs">
+        <div className="flex justify-between gap-2 2xl:flex-nowrap xxs:flex-wrap">
             <div className="flex justify-center items-center flex-col w-full p-2 ">
                 <InputBox label={"Username"} placeholder={"Enter Username"} onChange={(e)=>{
                     setusername(e.target.value)
@@ -76,8 +76,8 @@ export const SignUp=()=>{
                     setmobile(e.target.value)
                 }}/>
             </div>
-            <div className="flex justify-center  flex-col p-2 pl-5 ">
-                <div className="flex justify-between p-2">
+            <div className="flex justify-center  flex-col p-2 pl-5 xxs:pl-1 ">
+                <div className="flex justify-between p-2 xxs:flex-col xxs:gap-2 sm2:flex-row sm:justify-between">
                     <div className="flex justify-start gap-2 items-center">
                         <label className="font-bold text-amber-700" htmlFor="country-selector">Affiliates</label>
                         <select
@@ -93,7 +93,7 @@ export const SignUp=()=>{
                             {/* Add more options here if needed */}
                         </select>
                     </div>
-                    <div className="flex gap-2 items-center">
+                    <div className="flex gap-2 items-center ">
                         <label className="font-bold text-amber-700" htmlFor="age-selector">Age</label>
                         <select
                             name="age"
@@ -112,7 +112,7 @@ export const SignUp=()=>{
                         </select>
                     </div>
                 </div>
-                <div className="flex justify-between p-2 gap-3">
+                <div className="flex justify-between p-2 gap-3 xxs:flex-col xxs:gap-2 sm:flex-row">
                     <div className="flex gap-2 items-center">
                         <label className="font-bold text-amber-700" htmlFor="currEducation-selector">Present</label>
                         <select
@@ -152,7 +152,7 @@ export const SignUp=()=>{
                     </div>
                 </div>
             
-                <div className="flex justify-between p-2" >
+                <div className="flex justify-between p-2 xxs:flex-col xxs:gap-2 sm:flex-row" >
                     <div className="flex justify-start gap-2 items-center">
                         <label className="font-bold text-amber-700" htmlFor="country-selector">Country</label>
                         <select
@@ -193,7 +193,7 @@ export const SignUp=()=>{
             </div>
 
         </div>
-        <div className="p-2 pl-8 flex justify-start gap-3">
+        <div className="p-2 pl-8 flex justify-start gap-3 xxs:pl-2">
             <div 
                 className={checked ? 
                 `p-2 border border-yellow-600 bg-green-700 cursor-pointer w-5 h-5 rounded-sm` : 
@@ -218,8 +218,11 @@ export const SignUp=()=>{
                 </span>.
             </div>
         </div>
-        <div className="flex justify-start pl-7 gap-2 items-center cursor-pointer">
-            <div className="w-7 h-7 text-red-700 rounded-full border border-teal-300 font-light text-center">i</div>
+        <div className="flex justify-start pl-7 gap-1 items-center cursor-pointer xxs:pl-2">
+            <div className="w-7 h-7 flex justify-start items-center "><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="red" className="size-6">
+                <path strokeLinecap="round" strokeLinejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
+                </svg>
+            </div>
             <div className="text-zinc-600 underline font-semibold" onClick={()=>{router.push('/signin')}}>I alraedy have an account</div>
         </div>
         <div className="flex justify-center items-center p-2">

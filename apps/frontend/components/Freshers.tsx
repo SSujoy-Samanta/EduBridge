@@ -36,11 +36,11 @@ export const Freshers = ({ freshersData }: FreshersProps) => {
         setFilteredUsers(result);
     }
     return (
-        <div className="flex flex-col justify-center items-center">
+        <div className="flex flex-col justify-center items-center h-full w-full">
             <div className="flex justify-center items-center p-1">
                 <Search onSearch={filterUsers}/>
             </div>
-            <div className="grid grid-cols-2 p-4 gap-6">
+            <div className="grid lg:grid-cols-2 p-4 gap-6 xxs:grid-cols-1 w-full">
                 {filteredUsers.length > 0 ? (
                     filteredUsers.map((fresher, ind) => (
                         <ShowData key={ind} user={fresher} />

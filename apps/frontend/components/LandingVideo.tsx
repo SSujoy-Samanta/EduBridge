@@ -103,9 +103,9 @@ export const Landing = () => {
     }, [isClient]);
     if (!joined) {
         return (
-            <div className="flex w-full items-start justify-center pt-20 gap-4">
-                {isClient && <div className=" flex justify-center items-center p-2 rounded-md  border-2 border-cyan-600 w-2/5 ">{<video className="rounded-md w-full" autoPlay ref={videoRef}></video>}</div>}
-                <div className="w-1/5">
+            <div className="flex md:flex-row xxs:flex-col w-full md:items-start xxs:items-center justify-center lg:pt-20 md:pt-16 sm:pt-14 xxs:pt-10 gap-4 md:text-base sm:text-sm xxs:text-xs">
+                {isClient && <div className=" flex justify-center items-center p-2 rounded-md  border-2 border-cyan-600 lg:w-2/6 md:w-3/6 sm2:w-3/5 xxs:w-4/5  ">{<video className="rounded-md w-full" autoPlay ref={videoRef}></video>}</div>}
+                <div className="xl:w-1/5 lg:w-2/6 md:w-2/6 sm2:w-3/5 xxs:w-4/5">
                    <div className="w-full flex flex-col justify-center gap-2">
                         <SecondaryButton onClick={()=>{setCreate(x=>!x)}}>Create Room</SecondaryButton>
                         {creat && 
