@@ -16,7 +16,6 @@ interface UserRoom {
   createdBy: number;
 }
 
-
 export const Room = ({
   userId,
   initialUserRooms,
