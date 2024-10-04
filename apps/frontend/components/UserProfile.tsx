@@ -36,7 +36,7 @@ export const UserProfile = ({
         fetchUserInfo();
       }
     }
-  }, [refetch]);
+  }, [refetch,userId]);
   if (!userDetails) {
     return (
       <div>

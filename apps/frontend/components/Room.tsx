@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { InputBox } from "./InputBox";
 import { PrimaryButton } from "./Buttons/PrimaryButton";
 import { useSetRecoilState } from "recoil";
@@ -30,7 +30,7 @@ export const Room = ({
   //const router=useRouter();
   const [userRooms, setUserRooms] = useState<UserRoom[]>(initialUserRooms); // Use state for userRooms
   const [groupCreated, setGroupCreated] = useState(false);
-  const fetchUserRooms = async () => {
+  const fetchUserRooms = useCallback(async () => {
     try {
       const response = await axios.get(`${apiUrl}/room/getrooms`, {
         params: { id: userId },
@@ -40,14 +40,17 @@ export const Room = ({
       alert(error);
       setNotification({ msg: "Error fetching rooms", type: "error" });
     }
-  };
+  }, [userId, apiUrl]);  // Add userId and apiUrl as dependencies
+  
+  useEffect(() => {
+    fetchUserRooms();
+  }, [groupCreated, fetchUserRooms]);  // Now fetchUserRooms is memoized
+  
   const openLinkInNewTab = (url: string) => {
     window.open(url, "_blank");
   };
   // Fetch userRooms on mount or after group creation
-  useEffect(() => {
-    fetchUserRooms();
-  }, [groupCreated]);
+  
   return (
     <div className="flex gap-2 p-3 w-full h-full justify-center items-center flex-col  ">
       <div className="flex justify-center items-center w-full">

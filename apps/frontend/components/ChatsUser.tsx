@@ -25,7 +25,7 @@ export const Chatuser = ({
     } catch (error: any) {
       console.log("Error while Fetching users name");
     }
-  }, [room, userId]);
+  }, [room, userId,creator]);
   const sortedUsers = [...users].sort((a, b) =>
     a.id === userId ? -1 : b.id === userId ? 1 : 0,
   );
