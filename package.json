@@ -1,11 +1,12 @@
 {
-  "name": "EduBridge",
+  "name": "edubridge",
   "private": true,
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
     "lint": "turbo lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "db:generate":"cd packages/db && npx prisma generate && cd ../.."
   },
   "devDependencies": {
     "prettier": "^3.2.5",
@@ -19,6 +20,8 @@
   "workspaces": [
     "apps/*",
     "packages/*"
-  ]
-  
+  ],
+  "dependencies": {
+    "typewriter-effect": "^2.21.0"
+  }
 }

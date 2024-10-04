@@ -1,7 +1,7 @@
-'use client'
-import { notificationState } from '@/lib/atom';
-import React, { useEffect } from 'react';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+"use client";
+import { notificationState } from "@/lib/atom";
+import React, { useEffect } from "react";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 // Adjust the path accordingly
 
 export function Notification() {
@@ -34,4 +34,4 @@ export function Notification() {
       </div>
     </div>
   );
-};
+}

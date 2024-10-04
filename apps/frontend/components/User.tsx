@@ -11,22 +11,22 @@ interface Institution {
 }
 
 interface User {
-  id:number,
+  id: number;
   name: string;
   email: string;
   currDegree: string;
   pastDegree: string;
   affiliates: string;
-  schools: Institution[]; // Assuming it's an array of institutions
-  colleges: Institution[]; // Assuming it's an array of institutions
+  school: Institution[]; // Assuming it's an array of institutions
+  college: Institution[]; // Assuming it's an array of institutions
   address: Address;
   isAccept?: boolean;
 }
 interface UsersData {
-  user: User; 
+  user: User;
 }
 interface UserProps {
-  usersData: UsersData; 
+  usersData: UsersData;
 }
 
 export const Users = ({ usersData }: UserProps) => {
@@ -34,13 +34,13 @@ export const Users = ({ usersData }: UserProps) => {
   const user = usersData.user;
   return (
     <div>
-         {user ?  <UserInfo  user={user}/>
-          : 
-          (
-            <p className="flex justify-center items-center font-bold text-red-700 pt-24">No User data available.</p>
-        )} 
-        
-
+      {user ? (
+        <UserInfo user={user} />
+      ) : (
+        <p className="flex justify-center items-center font-bold text-red-700 pt-24">
+          No User data available.
+        </p>
+      )}
     </div>
   );
 };

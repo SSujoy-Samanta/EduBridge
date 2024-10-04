@@ -1,4 +1,4 @@
-import client from '@repo/db/client'
+import client from "@repo/db/client";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
@@ -12,14 +12,14 @@ export async function POST(req: NextRequest) {
     if (!senderId || !receiverId) {
       return NextResponse.json(
         { msg: "Sender ID and Receiver ID are required." },
-        { status: 400 }
+        { status: 400 },
       );
     }
-    if(senderId===receiverId){
-        return NextResponse.json(
-            { msg: "You can't send friend request to yourself." },
-            { status: 404 }
-          );
+    if (senderId === receiverId) {
+      return NextResponse.json(
+        { msg: "You can't send friend request to yourself." },
+        { status: 404 },
+      );
     }
 
     // Check if the friend request already exists
@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
     if (existingRequest) {
       return NextResponse.json(
         { msg: "Friend request already sent." },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -52,10 +52,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ data: newFriendRequest }, { status: 201 });
   } catch (error) {
     console.error(error);
-    return NextResponse.json(
-      { msg: "Internal server error" },
-      { status: 500 }
-    );
+    return NextResponse.json({ msg: "Internal server error" }, { status: 500 });
   }
 }
-

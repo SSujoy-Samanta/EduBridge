@@ -1,38 +1,38 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
 export async function createRoom(name: string, creatorId: number) {
   try {
     console.log(name);
-    console.log(creatorId)
+    console.log(creatorId);
     // Check if the room already exists
     let room = await prisma.room.findUnique({ where: { name } });
-    
+
     if (!room) {
       // Create the room if it doesn't exist and associate it with the creator
-      room = await prisma.room.create({ 
-        data: { 
+      room = await prisma.room.create({
+        data: {
           name: name,
           createdBy: creatorId,
           users: {
-            connect: { id: creatorId },  // Add the creator to the users list
+            connect: { id: creatorId }, // Add the creator to the users list
           },
         },
       });
     }
-    
+
     return room;
   } catch (error: any) {
     console.error(`Error creating room: ${error.message}`);
-    throw new Error('Could not create room');
+    throw new Error("Could not create room");
   }
 }
 
 export async function findRoom(name: string) {
   let room = await prisma.room.findUnique({ where: { name } });
   if (!room) {
-    return null
+    return null;
   }
   return room;
 }
@@ -62,13 +62,15 @@ export async function addUserToRoom(userId: number, roomId: number) {
         users: {
           connect: { id: userId },
         },
-      }
+      },
     });
 
     console.log(`User ${userId} added to room ${roomId}`);
     return updatedRoom;
   } catch (error: any) {
-    console.error(`Error adding user ${userId} to room ${roomId}: ${error.message}`);
+    console.error(
+      `Error adding user ${userId} to room ${roomId}: ${error.message}`,
+    );
   }
 }
 export async function removeUserFromRoom(userId: number, roomId: number) {
@@ -83,11 +85,10 @@ export async function removeUserFromRoom(userId: number, roomId: number) {
         },
       },
     });
-    
-    console.log(`User with ID ${userId} removed from Room with ID ${roomId}`);
-  } catch (error:any) {
-    console.error(`Error removing user from room: ${error.message}`);
 
+    console.log(`User with ID ${userId} removed from Room with ID ${roomId}`);
+  } catch (error: any) {
+    console.error(`Error removing user from room: ${error.message}`);
   }
 }
 export async function deleteEmptyRooms() {
@@ -98,19 +99,19 @@ export async function deleteEmptyRooms() {
     });
 
     // Filter rooms that have no users
-    const emptyRooms = rooms.filter((room : any) => room.users.length === 0);
+    const emptyRooms = rooms.filter((room: any) => room.users.length === 0);
 
     // Delete the empty rooms concurrently
     await Promise.all(
-      emptyRooms.map((room : any)=>
+      emptyRooms.map((room: any) =>
         prisma.room.delete({
           where: { id: room.id },
-        })
-      )
+        }),
+      ),
     );
 
     console.log(`${emptyRooms.length} empty rooms deleted.`);
-  } catch (error:any) {
+  } catch (error: any) {
     console.error(`Error deleting empty rooms: ${error.message}`);
   }
 }

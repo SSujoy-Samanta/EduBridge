@@ -26,7 +26,8 @@
     "react": "^18",
     "react-dom": "^18",
     "readline-sync": "^1.4.10",
-    "recoil": "^0.7.7"
+    "recoil": "^0.7.7",
+    "typewriter-effect": "^2.21.0"
   },
   "devDependencies": {
     "@types/node": "^20",

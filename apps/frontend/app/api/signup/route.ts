@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
     if (!parseBody.success) {
       return NextResponse.json(
         { msg: "Wrong Inputs", errors: parseBody.error.errors },
-        { status: 411 }
+        { status: 411 },
       );
     }
 
@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
     if (user) {
       return NextResponse.json(
         { msg: "This user already exists!" },
-        { status: 403 }
+        { status: 403 },
       );
     }
 
@@ -39,11 +39,11 @@ export async function POST(req: NextRequest) {
         name: parseBody.data.username,
         email: parseBody.data.email,
         password: hashPassword,
-        mobile:parseBody.data.mobile,
+        mobile: parseBody.data.mobile,
         affiliates: parseBody.data.affiliates,
-        age:parseBody.data.age,
-        currDegree:parseBody.data.currDegree,
-        pastDegree:parseBody.data.pastDegree
+        age: parseBody.data.age,
+        currDegree: parseBody.data.currDegree,
+        pastDegree: parseBody.data.pastDegree,
       },
     });
 

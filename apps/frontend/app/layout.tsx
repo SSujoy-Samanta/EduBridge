@@ -22,14 +22,13 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Provider>
-          <AppBar/>
-          <div className="absolute flex flex-col top-14 bg-neutral-950 w-full h-auto  text-white">
+          <AppBar />
+          <div className="absolute flex flex-col top-14 bg-gradient-to-r from-gray-900 via-neutral-950 to-slate-900 w-full h-auto  text-white">
             <div className="flex-1 min-h-svh">{children}</div>
-            <Footer/>
+            <Footer />
           </div>
-          <Notification/>
+          <Notification />
         </Provider>
-        
       </body>
     </html>
   );

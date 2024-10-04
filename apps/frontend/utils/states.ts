@@ -33,5 +33,5 @@ export const states = [
   "Delhi ",
   "Puducherry",
   "Jammu and Kashmir",
-  "Ladakh"
-  ];
+  "Ladakh",
+];
