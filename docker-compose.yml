@@ -1,0 +1,27 @@
+services:
+  frontend-app:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile.frontend
+    env_file:
+      - ./.env
+    ports:
+      - "3000:3000"
+
+  chat-app:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile.chatapp
+    env_file:
+       - ./.env
+    ports:
+      - "8080:8080"
+
+  videocall-app:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile.videocall
+    env_file:
+       - ./.env
+    ports:
+      - "3001:3001"
