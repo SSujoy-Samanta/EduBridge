@@ -15,17 +15,31 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    console.log("Parsed Body:", parseBody);
+    //console.log("Parsed Body:", parseBody);
 
     const user = await client.user.findFirst({
       where: {
         email: parseBody.data.email,
       },
     });
+    const isVeified= await client.verifyEmail.findFirst({
+      where:{
+        AND:{
+          email: parseBody.data.email,
+          verified:true,
+        }
+      }
+    })
 
     if (user) {
       return NextResponse.json(
         { msg: "This user already exists!" },
+        { status: 403 },
+      );
+    }
+    if(!isVeified){
+      return NextResponse.json(
+        { msg: "Please Veify your Email First!" },
         { status: 403 },
       );
     }
@@ -44,6 +58,7 @@ export async function POST(req: NextRequest) {
         age: parseBody.data.age,
         currDegree: parseBody.data.currDegree,
         pastDegree: parseBody.data.pastDegree,
+        verified:true
       },
     });
 
@@ -57,7 +72,7 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    console.log("Address created:", newAddress);
+    //console.log("Address created:", newAddress);
 
     return NextResponse.json({ msg: "Signup successful" }, { status: 200 });
   } catch (error) {

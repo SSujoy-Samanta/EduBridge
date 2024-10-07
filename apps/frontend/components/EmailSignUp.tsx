@@ -11,13 +11,16 @@ import { useSetRecoilState } from "recoil";
 import { notificationState } from "@/lib/atom";
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 import { signIn } from "next-auth/react";
+import { useSearchParams } from 'next/navigation';
+
 export const EmailSignUp = () => {
   const setNotification = useSetRecoilState(notificationState);
   const router = useRouter();
+  const searchParams = useSearchParams(); // Get the search params (query parameters)
   const [country, setCountry] = useState<string | null>(null);
   const [state, setState] = useState<string | null>(null);
   const [username, setusername] = useState<string>("");
-  const [email, setemail] = useState<string>("");
+  const [email, setemail] = useState<string|null>(searchParams.get('email'));
   const [password, setpassword] = useState<string>("");
   const [mobile, setmobile] = useState<string>("");
   const [Affiliates, setAffiliates] = useState<string>("");
@@ -26,6 +29,7 @@ export const EmailSignUp = () => {
   const [pastEducation, setpastEducation] = useState<string>("");
   const [age, setAge] = useState<string>("");
   const [checked, setChecked] = useState<boolean>(false);
+  
   const handleAgeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setAge(event.target.value);
   };
@@ -61,6 +65,9 @@ export const EmailSignUp = () => {
       setNotification({ msg: "Sign-Up successful", type: "success" });
     }
   };
+  if(!email){
+    router.push("/signup");
+  }
   return (
     <div className="w-3/5 flex h-full flex-col justify-center gap-2  bg-sky-950 p-3 rounded-md border border-cyan-300 xxs:w-11/12 mb-4 md:w-4/5 xl:w-3/5 sm2:text-base xxs:text-xs">
       <form className="flex justify-between gap-2 lg:flex-nowrap xxs:flex-wrap">
@@ -73,10 +80,10 @@ export const EmailSignUp = () => {
             }}
           />
           <InputBox
-            label={"Email"}
+            label="Email"
+            value={email ||''}
             placeholder={"name@gmail.com"}
             onChange={(e) => {
-              setemail(e.target.value);
             }}
           />
           <InputBox
@@ -89,7 +96,7 @@ export const EmailSignUp = () => {
           />
           <InputBox
             label={"Mobile No"}
-            placeholder={"+91 987654321"}
+            placeholder={"+91 123-456-7890"}
             onChange={(e) => {
               setmobile(e.target.value);
             }}
@@ -298,7 +305,7 @@ export const EmailSignUp = () => {
             router.push("/signin");
           }}
         >
-          I alraedy have an account
+          I already have an account
         </div>
       </div>
       <div className="flex justify-center items-center p-2">

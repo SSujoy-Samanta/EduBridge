@@ -31,3 +31,15 @@ export const AddUserSchema = z.object({
   state: z.string().min(1, "State is required"),
   city: z.string().min(1, "City is required"),
 });
+export const OtpSchema=z.object({
+  email: z.string().endsWith("@gmail.com").min(1, "Email is required"),
+  otp:z.string().min(6,"6 digit otp required"),
+})
+export const OtpEmailSchema=z.object({
+  email: z.string().endsWith("@gmail.com").min(1, "Email is required"),
+})
+export const PasswordSchema=z.object({
+  email: z.string().endsWith("@gmail.com").min(1, "Email is required"),
+  password: z.string().min(6, "Password must be at least 6 characters"),
+  otp:z.string().min(6,"6 digit otp required"),
+})

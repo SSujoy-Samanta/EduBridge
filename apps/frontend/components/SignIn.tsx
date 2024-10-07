@@ -7,12 +7,15 @@ import { useRouter } from "next/navigation";
 import { useSetRecoilState } from "recoil";
 import { notificationState } from "@/lib/atom";
 import GoogleSVG from "./CustomSvg/Google";
+import { ResetPassOtpModal } from "./ResetPassOtpModal";
 
 export const SignIn = () => {
   const setNotification = useSetRecoilState(notificationState);
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [forget,setForget]=useState<boolean>(false);
+  const [otp,setOtp]=useState<string>('')
   const handleSignIn = async () => {
     if (!email || !password) {
       setNotification({
@@ -62,7 +65,11 @@ export const SignIn = () => {
         onChange={(e) => {
           setPassword(e.target.value);
         }}
-      />
+      /> 
+      <div className="p-1 flex justify-center items-center w-full"> <p className="text-blue-500 underline cursor-pointer" onClick={()=>{setForget(x=>!x)}}>Forget Password</p> </div>
+      {forget && 
+        <ResetPassOtpModal email={email} setEmail={setEmail} setForget={setForget} otp={otp} setOtp={setOtp}/>
+      }
       <div className="p-2">
         <PrimaryButton onClick={handleSignIn}>LogIn</PrimaryButton>
       </div>
@@ -73,7 +80,7 @@ export const SignIn = () => {
         </span>
       </div>
       <div
-        className="xxs:w-full sm:w-5/6 md:w-4/5 flex justify-around items-center p-2  bg-white rounded-md cursor-pointer hover:bg-gray-300"
+        className="xxs:w-full sm:w-5/6 md:w-4/5 flex justify-start pl-5 items-center p-2  bg-white rounded-md cursor-pointer hover:bg-gray-300"
         onClick={() => {
           signIn("google", {
             redirect: true, // Set to true if you want to redirect to the callback URL automatically
@@ -84,7 +91,7 @@ export const SignIn = () => {
         <div>
           <GoogleSVG />
         </div>
-        <p className="text-gray-700 font-semibold">CONTINUE WITH GOOGLE</p>
+        <p className="text-gray-700 font-semibold pl-4">CONTINUE WITH GOOGLE</p>
       </div>
       {/* <div className="font-bold border rounded-md w-full p-3 text-center hover:bg-slate-800 cursor-pointer" onClick={()=>{
             signIn('github',{
@@ -113,7 +120,7 @@ export const SignIn = () => {
           </svg>
         </div>
         <div
-          className="text-stone-800 underline font-semibold"
+          className="text-blue-500 underline font-semibold"
           onClick={() => {
             router.push("/signup");
           }}
@@ -122,5 +129,6 @@ export const SignIn = () => {
         </div>
       </div>
     </div>
+        
   );
 };

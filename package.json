@@ -6,7 +6,10 @@
     "dev": "turbo dev",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "db:generate":"cd packages/db && npx prisma generate && cd ../.."
+    "db:generate":"cd packages/db && npx prisma generate && cd ../..",
+    "start-frontend-app": "cd ./apps/frontend && npm run start",
+    "start-videocall-app": "cd ./apps/videocall && npm run start",
+    "start-chatapp-app": "cd ./apps/websocket && npm run start"
   },
   "devDependencies": {
     "prettier": "^3.2.5",

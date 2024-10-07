@@ -109,6 +109,7 @@ export const NEXT_AUTH = {
                 name: name,
                 email: email,
                 password: hashPassword,
+                verified:true,
               },
             });
             user.id = newUser.id.toString();

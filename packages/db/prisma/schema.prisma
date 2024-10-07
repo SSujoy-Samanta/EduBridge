@@ -54,11 +54,19 @@ model College {
 
 model Otp {
   id        Int      @id @default(autoincrement())
-  OTP       Int
+  OTP       String
   created   DateTime @default(now())
   expired   DateTime
   userId    Int      @unique
   user      User     @relation(fields: [userId], references: [id])
+}
+model VerifyEmail{
+  id        Int      @id @default(autoincrement())
+  OTP       String
+  email     String
+  verified    Boolean    @default(false)
+  created   DateTime @default(now())
+  expired   DateTime
 }
 model  Address{
   id        Int      @id @default(autoincrement())
