@@ -31,7 +31,7 @@ Node.js (if running locally)
 
 # Clone the Repository:
 ```bash
-git clone https://github.com/your-repo/turbo-docker-project.git
+git clone https://github.com/SSujoy-Samanta/EduBridge.git
 cd EduBridge
 ```
 
