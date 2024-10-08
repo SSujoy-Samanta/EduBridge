@@ -7,15 +7,15 @@ This project consists of a monorepo managed with TurboRepo, which contains three
 
 ## Project Structure
 
-.
-├── apps
-│   ├── nextjs-app        # Next.js application
-│   ├── nodejs-app-1      # First Node.js application
-│   ├── nodejs-app-2      # Second Node.js application
-├── packages
-│   └── db                # Prisma PostgreSQL database logic
-├── docker-compose.yml    # Docker Compose file to run all apps
-└── ...
+    .
+    ├── apps
+    │   ├── nextjs-app        # Next.js application
+    │   ├── nodejs-app-1      # First Node.js application
+    │   ├── nodejs-app-2      # Second Node.js application
+    ├── packages
+    │   └── db                # Prisma PostgreSQL database logic
+    ├── docker-compose.yml    # Docker Compose file to run all apps
+    └── ...
 
 ## Apps
 
