@@ -1,81 +1,104 @@
-# Turborepo starter
+## EduBridge_Project
+A paltfrom where freshers and alumni can connect to each other
 
-This is an official starter Turborepo.
+## TurboRepo Project with Docker
 
-## Using this example
+This project consists of a monorepo managed with TurboRepo, which contains three applications (Next.js and two Node.js apps) and a shared PostgreSQL database using Prisma. The project is partitioned into different Docker containers, and the services can be managed using Docker Compose.
 
-Run the following command:
+## Project Structure
 
-```sh
-npx create-turbo@latest
+.
+├── apps
+│   ├── nextjs-app        # Next.js application
+│   ├── nodejs-app-1      # First Node.js application
+│   ├── nodejs-app-2      # Second Node.js application
+├── packages
+│   └── db                # Prisma PostgreSQL database logic
+├── docker-compose.yml    # Docker Compose file to run all apps
+└── ...
+
+## Apps
+
+Next.js App: A frontend web application.
+Node.js App 1 & 2: Backend services.
+Packages/db: Contains the Prisma database schema and logic shared by the applications.
+
+## Requirements
+Docker & Docker Compose installed on your machine
+Node.js (if running locally)
+
+## Setup
+
+# Clone the Repository:
+```bash
+git clone https://github.com/your-repo/turbo-docker-project.git
+cd EduBridge
 ```
 
-## What's inside?
-
-This Turborepo includes the following packages/apps:
-
-### Apps and Packages
-
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
-
+# Install Dependencies:
+```bash
+npm install
 ```
-cd my-turborepo
-pnpm build
-```
+# Set Up Environment Variables:
 
-### Develop
+# Example .env in the Root Folder (./.env):
 
-To develop all apps and packages, run the following command:
+    DATABASE_URL=postgres://user:password@db:5432/mydb
+    NEXT_PUBLIC_API_URL=http://localhost:3000/api
 
-```
-cd my-turborepo
-pnpm dev
+# Build Docker Images:
+
+Each app has its own Dockerfile, and you can use Docker Compose to build them all together.
+docker-compose build
+
+# Run the Applications:
+
+To start all services (Next.js, Node.js, and PostgreSQL), use:
+docker-compose up
+
+The apps will be available at the following locations:
+
+    1.Next.js: http://localhost:3000
+    2.Node.js App 1: http://localhost:8080
+    3.Node.js App 2: http://localhost:3001
+
+# Stopping the Services:
+
+To stop all running containers, use:
+```bash
+docker-compose down
 ```
 
-### Remote Caching
+## Database
+This project uses Prisma as an ORM to interact with the PostgreSQL database. The packages/db folder contains the Prisma schema and related database logic.
 
-Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup), then enter the following commands:
-
-```
-cd my-turborepo
-npx turbo login
+Running Migrations
+If you need to run database migrations, use Prisma:
+```bash
+npx prisma migrate dev
 ```
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+You can also generate the Prisma Client with:
 
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-```
-npx turbo link
+```bash
+npx prisma generate
 ```
 
-## Useful Links
+## Docker Details
+Each app has a corresponding Dockerfile, and Docker Compose is used to manage the containers. Here’s how Docker is set up:
 
-Learn more about the power of Turborepo:
+    Next.js App: Runs on port 3000
+    Node.js App 1: Runs on port 4000
+    Node.js App 2: Runs on port 5000
+    PostgreSQL: A Dockerized PostgreSQL instance
 
-- [Tasks](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
-- [Caching](https://turbo.build/repo/docs/core-concepts/caching)
-- [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
-- [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
-- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
+# Commands Summary
+    Build images: docker-compose build
+    Start apps: docker-compose up
+    Stop apps: docker-compose down
+    Run Prisma migrations: npx prisma migrate dev
+    Generate Prisma client: npx prisma generate
+## License
+This project is licensed under the MIT License.
+
+    This version is cleaner and more organized, making it easier to follow and more professional. Let me know if you need further modifications!
