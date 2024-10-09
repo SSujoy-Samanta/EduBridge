@@ -163,7 +163,7 @@ export const Chating = ({ userId, room }: { userId: number; room: string }) => {
           </div>
         </div>
         <div
-          className="border border-cyan-900 p-2 rounded-md overflow-auto h-96 bg-zinc-900"
+          className="border border-cyan-900 p-2 rounded-md overflow-auto h-96 bg-slate-900"
           ref={containerRef}
         >
           {messages.map((msg, ind) =>
