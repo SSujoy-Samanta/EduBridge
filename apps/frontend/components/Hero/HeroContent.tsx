@@ -20,7 +20,7 @@ export const HeroContent = () => {
           Alumni
         </span>
       </h2>
-      <div className="sm:text-xl xxs:text-base text-gray-400 mb-8 leading-relaxed items-center p-2 h-full">
+      <div className="sm:text-xl xxs:text-base text-gray-400 mb-8 leading-relaxed  items-center p-2 h-full">
         EduBridge brings a platform where freshers and alumni can connect,
         collaborate, and grow together. Join us for
         <div className="text-sky-400 text-3xl h-8 mt-4">

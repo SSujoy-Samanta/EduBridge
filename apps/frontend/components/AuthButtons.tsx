@@ -87,14 +87,14 @@ export const AuthButtons = () => {
               router.push("/signin");
             }}
           >
-            Log In
+            LOG IN
           </PrimaryButton>
           <LinkButton
             onClick={() => {
               router.push("/signup");
             }}
           >
-            Sign Up
+            SIGN UP
           </LinkButton>
         </div>
       )}

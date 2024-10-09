@@ -65,7 +65,7 @@ export const ResetPassOtpModal = ({
         onClick={handleClickInside}
       >
         <div
-          className="relative bg-white rounded-lg shadow  bg-gradient-to-tl  p-2 "
+          className="relative rounded-lg shadow  bg-gradient-to-tl from-black  to-slate-900  p-2 "
           onClick={handleClickInside}
         >
             <div className="flex items-center justify-between p-2 pb-0 rounded-t ">

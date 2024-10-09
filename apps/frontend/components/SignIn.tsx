@@ -8,6 +8,7 @@ import { useSetRecoilState } from "recoil";
 import { notificationState } from "@/lib/atom";
 import GoogleSVG from "./CustomSvg/Google";
 import { ResetPassOtpModal } from "./ResetPassOtpModal";
+import { Logo } from "./Logo";
 
 export const SignIn = () => {
   const setNotification = useSetRecoilState(notificationState);
@@ -50,7 +51,17 @@ export const SignIn = () => {
   };
 
   return (
-    <div className="flex justify-center flex-col gap-2 items-center xl:w-2/6 border rounded-md p-2 bg-cyan-900 border-sky-400 mb-10 md:w-3/6 sm:w-3/5 md:text-base sm:text-sm xxs:text-xs sm2:w-4/6 xxs:w-5/6">
+    <div className="flex justify-center flex-col gap-2 items-center xl:w-2/6 rounded-md p-2 bg-gradient-to-tr from-cyan-950 via-cyan-800 to-cyan-500 mb-10 md:w-3/6 sm:w-3/5 md:text-base sm:text-sm xxs:text-xs sm2:w-4/6 xxs:w-5/6">
+      <div className="py-2 mb-2 flex items-center justify-around text-center gap-2 w-full  bg-gradient-to-tr  from-black via-gray-800 to-slate-900 rounded-sm ">
+        <div className="flex justify-center items-center">
+          <p className="lg:text-2xl md:text-xl xxs:text-lg font-semibold  animate-pulse  text-pink-600">
+            SIGN UP 
+          </p>
+        </div>
+        <div className="">
+          <Logo />
+        </div>
+      </div>
       <InputBox
         label={"Email"}
         placeholder={"name@gmail.com"}
@@ -66,7 +77,7 @@ export const SignIn = () => {
           setPassword(e.target.value);
         }}
       /> 
-      <div className="p-1 flex justify-center items-center w-full"> <p className="text-blue-500 underline cursor-pointer" onClick={()=>{setForget(x=>!x)}}>Forget Password</p> </div>
+      <div className="p-1 flex justify-center items-center w-full"> <p className="text-blue-500 underline cursor-pointer" onClick={()=>{setForget(x=>!x)}}>Forget Password?</p> </div>
       {forget && 
         <ResetPassOtpModal email={email} setEmail={setEmail} setForget={setForget} otp={otp} setOtp={setOtp}/>
       }
