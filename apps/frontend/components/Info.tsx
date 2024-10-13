@@ -56,7 +56,7 @@ export const UserInfo = ({ user }: { user: User }) => {
     <div className="w-full p-2 ">
       <div className="flex p-2 gap-2  md:items-center md:text-base sm2:text-sm xxs:text-xs">
         <div className="w-full p-2 flex flex-col border border-cyan-800 hover:bg-slate-900 rounded-md ">
-          <div className="flex p-2 bg-cyan-950 hover:bg-cyan-800 rounded-md ">
+          <div className="flex p-2 bg-cyan-800 hover:bg-cyan-900 rounded-md ">
             <div className="p-2 w-10 h-10 flex items-center justify-center text-center rounded-full bg-stone-900 text-white">
               {name.toUpperCase()[0]}
             </div>

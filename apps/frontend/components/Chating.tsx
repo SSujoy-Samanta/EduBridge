@@ -91,7 +91,7 @@ export const Chating = ({ userId, room }: { userId: number; room: string }) => {
       containerRef.current.scrollTop = containerRef.current.scrollHeight;
     }
   }, [messages]);
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key === "Enter") {
       if (socket && input.trim()) {
         socket.send(
@@ -185,11 +185,11 @@ export const Chating = ({ userId, room }: { userId: number; room: string }) => {
           )}
         </div>
         <div className="flex justify-between p-2 gap-2">
-          <input
+          <textarea
             value={input}
             onKeyDown={handleKeyDown}
             onChange={(e) => setInput(e.target.value)}
-            className="text-black w-full rounded-md p-2"
+            className="text-white w-full bg-gradient-to-br from-slate-900 to-gray-700  rounded-md p-2"
             placeholder="Message..."
           />
           <button
@@ -206,7 +206,7 @@ export const Chating = ({ userId, room }: { userId: number; room: string }) => {
                 setInput("");
               }
             }}
-            className="border rounded-md border-slate-800 p-2 bg-green-500"
+            className="border rounded-md border-slate-800 m-auto p-2 bg-green-500"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

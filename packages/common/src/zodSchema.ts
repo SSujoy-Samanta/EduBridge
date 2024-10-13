@@ -43,3 +43,8 @@ export const PasswordSchema=z.object({
   password: z.string().min(6, "Password must be at least 6 characters"),
   otp:z.string().min(6,"6 digit otp required"),
 })
+export const PostSchema=z.object({
+  content: z.string().min(1, "Content is required"),
+  imageUrl: z.string().url().optional().nullable(), // allow file to be optional or nullable
+  authorId: z.number().min(1, "Author Id is required"),
+})

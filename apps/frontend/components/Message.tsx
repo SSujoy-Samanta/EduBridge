@@ -16,9 +16,9 @@ export const Message = ({
           <label className="font-light text-amber-700 ">{user}</label>
           <p
             className={
-              type === "you"
-                ? `"m-1 border rounded-md p-2 border-teal-500 bg-sky-800 break-all"`
-                : "m-1 border rounded-md p-2 border-sky-500 bg-teal-800 break-words"
+              type === "You"
+                ? `"m-1 rounded-md p-2  bg-sky-800 break-words"`
+                : "m-1 rounded-md p-2  bg-fuchsia-900 break-words"
             }
           >
             {msg}

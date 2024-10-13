@@ -34,6 +34,7 @@ model User {
   createdVideoCallRooms VideoCallRoom[]  @relation("CreatedVideoCallRooms")
   sentFriendships      Friendship[] @relation("sentFriendships")
   receivedFriendships  Friendship[] @relation("receivedFriendships")
+  posts     Post[]
 }
 
 model School {
@@ -116,6 +117,16 @@ model Friendship {
   @@unique([senderId, receiverId]) // Ensures a unique pair of sender and receiver
   @@index([senderId])              // Adds index for senderId
   @@index([receiverId])            // Adds index for receiverId
+}
+model Post {
+  id        Int      @id @default(autoincrement())
+  content   String
+  imageUrl  String?  // Optional image URL
+  public_id String?
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  Int
+  createdAt DateTime @default(now())
+  like      Int      @default(0)
 }
 
 enum FriendshipStatus {
