@@ -15,3 +15,17 @@ export const AuthMiddleware = async (
 
   return NextResponse.next();
 };
+export const PostSignInMiddleware = async (
+  req: NextRequest,
+): Promise<NextResponse> => {
+  const token = await getToken({
+    req: req as any,
+    secret: process.env.NEXTAUTH_SECRET,
+  });
+
+  if (token) {
+    return NextResponse.redirect(new URL("/dashboard", req.url));
+  }
+
+  return NextResponse.next();
+};

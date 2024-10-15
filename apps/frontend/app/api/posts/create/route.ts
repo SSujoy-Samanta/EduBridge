@@ -20,10 +20,9 @@ export async function POST(req: NextRequest, res: NextResponse) {
     let data: any = null;
 
     // If there is an image, upload it to Cloudinary
-    // If there is an image, upload it to Cloudinary
     if (image) {
       try {
-        data = await uploadImage(image, "EduBridge");
+        data = await uploadImage(image, "Edubridge");
       } catch (uploadError:any) {
         console.error("Image upload failed:", uploadError);
         return NextResponse.json({ msg: "Image upload failed" }, { status: 500 });

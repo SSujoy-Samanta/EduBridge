@@ -28,7 +28,7 @@ export async function GET(req: NextRequest) {
           {
             msg: "No Alumni Data found",
           },
-          { status: 404 },
+          { status: 403 },
         );
       }
 

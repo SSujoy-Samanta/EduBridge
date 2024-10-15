@@ -4,7 +4,7 @@ import { cloudinary } from "./cloudinary";
 export const uploadImage = async (file: File, folder: string) => {
     const buffer = await file.arrayBuffer();
     const bytes = Buffer.from(buffer);
-
+    console.log("uploading to Cloudinary:");
     return new Promise((resolve, reject) => {
         const uploadStream = cloudinary.uploader.upload_stream(
             {
@@ -13,8 +13,10 @@ export const uploadImage = async (file: File, folder: string) => {
             },
             (err, result) => {
                 if (err) {
+                    //console.error("Error uploading to Cloudinary:", err);
                     return reject(err.message);
                 }
+                console.log("result uploading to Cloudinary:");
                 resolve(result);
             }
         );

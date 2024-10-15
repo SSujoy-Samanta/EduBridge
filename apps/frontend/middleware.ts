@@ -1,12 +1,14 @@
 // middleware.ts
 import { NextRequest, NextResponse } from "next/server";
-import { AuthMiddleware } from "./utils/Middleware/authMid";
+import { AuthMiddleware, PostSignInMiddleware } from "./utils/Middleware/authMid";
 import { rateLimit } from "./utils/Middleware/rateLimiter";
 
 // Specify paths to match for this middleware
 export const config = {
   matcher: [
     "/api/:path*",
+    "/signup/:path*",
+    "/signin/:path*",
     "/dashboard/:path*",
     "/admin/:path*",
     "/chats/:path*",
@@ -40,6 +42,16 @@ export async function middleware(req: NextRequest) {
     req.nextUrl.pathname.startsWith("/adduserinfo")
   ) {
     const authResponse = await AuthMiddleware(req);
+    if (authResponse) {
+      return authResponse; // Redirect or allow request based on authentication
+    }
+  }
+
+  if (
+    req.nextUrl.pathname.startsWith("/signin") ||
+    req.nextUrl.pathname.startsWith("/signup")
+  ) {
+    const authResponse = await PostSignInMiddleware(req);
     if (authResponse) {
       return authResponse; // Redirect or allow request based on authentication
     }
