@@ -37,7 +37,7 @@ export async function PUT(req: NextRequest) {
         id: parseBody.data.id,
       },
       data: {
-        affiliates: parseBody.data.affiliates,
+        affiliates: parseBody.data.affiliates.toLowerCase(),
         currDegree: parseBody.data.currDegree,
         pastDegree: parseBody.data.pastDegree,
       },

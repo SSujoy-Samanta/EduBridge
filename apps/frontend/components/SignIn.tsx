@@ -55,7 +55,7 @@ export const SignIn = () => {
       <div className="py-2 mb-2 flex items-center justify-around text-center gap-2 w-full  bg-gradient-to-tr  from-black via-gray-800 to-slate-900 rounded-sm ">
         <div className="flex justify-center items-center">
           <p className="lg:text-2xl md:text-xl xxs:text-lg font-semibold  animate-pulse  text-pink-600">
-            SIGN UP 
+            LOG IN 
           </p>
         </div>
         <div className="">

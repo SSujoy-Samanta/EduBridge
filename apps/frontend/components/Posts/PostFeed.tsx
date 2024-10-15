@@ -68,7 +68,7 @@ export const PostFeed=()=>{
           <Loader/>
         </div>
     }
-      <div className="absolute bottom-2 w-full flex justify-center items-center p-2 text-slate-900">
+      <div className="relative bottom-2 w-full flex justify-center items-center p-2 text-slate-900">
         <button
           disabled={page === 1} // Disable when on page 1
           className={`p-2 text-center ${

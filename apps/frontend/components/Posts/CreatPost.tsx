@@ -34,7 +34,11 @@ export const CreatePost = ({ userId ,setView }: {
           formData.append("image",imageFile);
         }
 
-        const res=await axios.post(`${apiUrl}/posts/create`, formData);
+        const res=await axios.post(`${apiUrl}/posts/create`, formData,{
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
         console.log(res.data);
         setNotification({ msg: 'Posting Succcessful', type: 'success' });
         setView('A')
